@@ -14,10 +14,10 @@ app.listen(port, () => {
   console.log(`Server lytter på port ${port}`);
 });
 
-app.get("/register", async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     const { username, password, mail } = req.query;
-    const hashedPassword = bcrypt.hash(password, 10); // hash passordet
+    const hashedPassword = await bcrypt.hash(password, 10); // hash passordet
     const user = new User({
       // User er en mongoose model
       mail: mail,
@@ -25,7 +25,6 @@ app.get("/register", async (req, res) => {
       password: hashedPassword,
     });
     await user.save(); // lagrer i databasen
-    console.log(user._id);
     const token = jwt.sign(
       // lager en token
       { username: username, _id: user._id },
