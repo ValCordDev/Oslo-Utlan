@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   mail: { type: String, unique: true },
   username: { type: String, unique: true },
   password: String,
+  renting: { type: Array, default: [] },
   dateCreated: { type: Date, default: Date.now },
 });
 
