@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import connectDB from "../../../db.js";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 import bcrypt from "bcrypt";
 import { default as User } from "../../../models/User.js";
 import { default as Item } from "../../../models/Item.js";
@@ -10,6 +11,9 @@ const port = 3001;
 dotenv.config();
 
 connectDB(); // koble til databasen
+
+app.use(cors());
+
 
 app.listen(port, () => {
   console.log(`Server lytter på port ${port}`);

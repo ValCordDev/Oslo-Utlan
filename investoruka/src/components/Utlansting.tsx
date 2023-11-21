@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Utlansting = () => {
+const Utlansting = ({ item }: any) => {
+  console.log(item)
   return (
     <div className='bg-[#191919] rounded-2xl w-[32rem] h-48 shadow-xl flex flex-row'>
       <img src="https://pricespy-75b8.kxcdn.com/product/standard/280/5113846.jpg" alt="Playstation" className='m-2 rounded-lg h-[11rem]' />
