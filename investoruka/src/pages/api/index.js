@@ -26,6 +26,16 @@ app.get("/getUser", async (req, res) => {
   }
 });
 
+app.get("/getItems", async (req, res) => {
+  try {
+    const items = await Item.find({});
+    res.status(200).json({ items: items });
+  } catch (error) {
+    console.error("Error while getting items:", error);
+    res.status(500).json({ status: "Internal Server Error" });
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const { username, password, mail } = req.query;
