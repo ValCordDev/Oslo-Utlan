@@ -11,7 +11,7 @@ interface Item {
 }
 
 export default function utlan() {
-  const [items, setItems] = useState<Item[] | null>(null);
+  const [items, setItems] = useState<Item[]>([]);
   useEffect(() => {
     getItems()
   }, [])
@@ -28,7 +28,7 @@ export default function utlan() {
     })
     if (res.status === 200) {
       const data = await res.json()
-      setItems(data)
+      setItems(data.items)
     }
     else if (res.status === 400) {
       const data = await res.json()
@@ -42,7 +42,7 @@ export default function utlan() {
       <span className='text-white flex w-screen justify-center text-6xl mt-20 mb-10 font-bold'>Utlånstilbud</span> 
       <div className='flex justify-center w-full h-screen'>
         <div className='grid lg:grid-cols-2 gap-5 grid-cols-1'>
-          {items && items.map((item: any) => (
+        {Array.isArray(items) && items.length > 0 && items.map((item: Item) => (
             <Utlansting key={item.id} item={item} />
           ))}
         </div>
