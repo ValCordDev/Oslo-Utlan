@@ -14,7 +14,6 @@ connectDB(); // koble til databasen
 
 app.use(cors());
 
-
 app.listen(port, () => {
   console.log(`Server lytter på port ${port}`);
 });
@@ -108,6 +107,41 @@ app.put("/rent", async (req, res) => {
       item.dateRented = Date.now();
       item.renter = user.username;
       user.renting.push(item.title);
+      await item.save();
+      await user.save();
+      res.status(200).json({ status: "Item rented" });
+    }
+  }
+});
+
+app.put("/return", async (req, res) => {
+  const { itemID, userID, token } = req.query; // token er en JWT
+  let verified = false;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET, (err) => {
+      // verifiserer token
+      if (err) {
+        console.log(err);
+      } else {
+        verified = true;
+      }
+    });
+  } catch (error) {
+    console.error("Error verifying JWT:", error);
+  }
+  if (verified) {
+    const item = await Item.findById(itemID); // finn gjenstanden i databasen
+    const user = await User.findById(userID); // finn brukeren i databasen
+    if (!item.isRented) {
+      res.status(400).json({ status: "Item is already returned/not rented" });
+    } else {
+      item.isRented = false;
+      item.dateRented = null;
+      item.renter = null;
+      const index = user.renting.indexOf(item.title);
+      if (index !== -1) {
+        user.renting.splice(index, 1);
+      }
       await item.save();
       await user.save();
       res.status(200).json({ status: "Item rented" });
