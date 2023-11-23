@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { LockIcon } from "./LockIcon";
 import { MailIcon } from "./MailIcon";
 import { FormEvent } from 'react'
+import { CiGlass } from "react-icons/ci";
+import { redirect } from "next/dist/server/api-utils";
+import Router from 'next/router'
 
 // Import statements 
 
@@ -33,28 +36,6 @@ export default function Logginn() {
         register()
       }
 
-      const [formLoggInnData, setFormLoggInnData] = useState({
-        // add more fields as needed
-        floating_password: '',
-        floating_email: '',
-      });
-    
-      // Handle changes in form fields
-      const handleLoggInnChange = (e: any) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
-    
-      // Handle form submission
-      const onLoggInnSubmit = async (e: any) => {
-        e.preventDefault();
-        console.log(formData)
-
-      }
-
       async function register() {
         try {
             const response = await fetch(`http://localhost:3001/register?username=${formData.floating_username}&password=${formData.floating_password}&mail=${formData.floating_email}`, {
@@ -70,6 +51,7 @@ export default function Logginn() {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 console.log('Registration successful!');
+                Router.push('/utlan')
             } else {
                 console.error('Registration failed:', data.status);
             }
@@ -77,6 +59,53 @@ export default function Logginn() {
             console.error('Error during registration:', error);
         }
     }
+
+    const [formLoggInnData, setFormLoggInnData] = useState({
+        // add more fields as needed
+        floating_password: '',
+        floating_email: '',
+      });
+    
+      // Handle changes in form fields
+      const handleLoggInnChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormLoggInnData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+    
+      // Handle form submission
+      const onLoggInnSubmit = async (e: any) => {
+        e.preventDefault();
+        console.log(formLoggInnData)
+        handleLogin()
+      }
+
+      const handleLogin = async () => {
+        try {
+          const response = await fetch(`http://localhost:3001/login?mail=${formLoggInnData.floating_email}&password=${formLoggInnData.floating_password}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+    
+          const data = await response.json();
+    
+          if (response.ok) {
+            console.log(data)
+            const login = {dataToken: data.token, dataUID: data.uid}
+            localStorage.setItem('login', JSON.stringify(login))
+            console.log('Login successful!');
+            Router.push('/utlan')
+          } else {
+            console.error('Login failed:', data.status);
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+        }
+      };
     
     return (
       <>
