@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LockIcon } from "./LockIcon";
 import { MailIcon } from "./MailIcon";
 import { FormEvent } from 'react'
@@ -11,6 +11,10 @@ export default function Logginn() {
 
     const [formData, setFormData] = useState({
         // add more fields as needed
+        floating_username: '',
+        floating_password: '',
+        floating_email: '',
+        floating_confirmpassword: ''
       });
     
       // Handle changes in form fields
@@ -26,7 +30,31 @@ export default function Logginn() {
       const onSubmit = async (e: any) => {
         e.preventDefault();
         console.log(formData)
+        register()
       }
+
+      async function register() {
+        try {
+            const response = await fetch(`http://localhost:3001/register?username=${formData.floating_username}&password=${formData.floating_password}&mail=${formData.floating_email}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            const data = await response.json();
+    
+            // Assuming the server responds with a token on successful registration
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                console.log('Registration successful!');
+            } else {
+                console.error('Registration failed:', data.status);
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+        }
+    }
     
     return (
       <>
