@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { CiUser } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import { GetUser } from "@/actions/getUserAction";
+import { CgLaptop } from "react-icons/cg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,12 @@ export default function profil() {
   const uid = GetUser();
   useEffect(() => {
     getUserModel();
-  }, []);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  }, [uid]);
+
   const getUserModel = async () => {
+    if (!uid) {return;}
     const res = await fetch(
-      `http://localhost:3001/getUser?userID=655b305bc596691349130886`,
+      `http://localhost:3001/getUser?userID=${uid}`,
       {
         method: "GET",
         headers: {

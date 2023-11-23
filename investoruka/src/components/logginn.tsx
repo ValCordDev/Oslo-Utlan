@@ -95,8 +95,8 @@ export default function Logginn() {
     
           if (response.ok) {
             console.log(data)
-            const login = {dataToken: data.token, dataUID: data.uid}
-            localStorage.setItem('login', JSON.stringify(login))
+            // const login = {dataToken: data.token, dataUID: data.uid}
+            localStorage.setItem('token', data.token)
             console.log('Login successful!');
             Router.push('/utlan')
           } else {
