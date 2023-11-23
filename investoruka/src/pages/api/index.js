@@ -80,8 +80,8 @@ app.post("/register", async (req, res) => {
 
 app.get("/login", async (req, res) => {
   try {
-    const { username, password } = req.query;
-    const user = await User.findOne({ username: username }); // finn brukeren i databasen
+    const { mail, password } = req.query;
+    const user = await User.findOne({ mail: mail }); // finn brukeren i databasen
     if (!user || !user.comparePassword(password)) {
       res.status(400).json({ status: "Wrong username or password" }); // hvis brukeren ikke finnes eller passordet er feil
     } else {
@@ -89,7 +89,7 @@ app.get("/login", async (req, res) => {
         { username: user.username }, // lager en token
         process.env.JWT_SECRET // hemmelig nøkkel
       );
-      res.status(200).json({ token: token, username: user.username }); // sett til localstorage i frontend
+      res.status(200).json({ token: token, uid: user._id }); // sett til localstorage i frontend
     }
   } catch (error) {
     console.error("Error while logging in:", error);
