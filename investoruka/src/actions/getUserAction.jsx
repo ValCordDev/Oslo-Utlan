@@ -5,7 +5,6 @@ const GetUser = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    console.log(storedToken);
     if (storedToken) {
       verifyUser(storedToken).then();
     } else {

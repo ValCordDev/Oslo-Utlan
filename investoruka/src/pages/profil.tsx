@@ -2,28 +2,29 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { CiUser } from "react-icons/ci";
 import { useState, useEffect } from "react";
-import { GetUser } from "@/actions/getUser.jsx";
+import { GetUser } from "@/actions/getUserAction";
 
 const inter = Inter({ subsets: ["latin"] });
 
 interface User {
   mail: string;
-  name: string;
+  username: string;
   renting: string[];
   dateCreated: string;
 }
 
 export default function profil() {
   const [user, setUser] = useState<User>();
-  const username = GetUser();
+  const uid = GetUser();
   useEffect(() => {
-    getUser();
-    console.log(username);
+    getUserModel();
   }, []);
-
-  const getUser = async () => {
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+  const getUserModel = async () => {
     const res = await fetch(
-      `http://localhost:3001/getUser?username=${username}`,
+      `http://localhost:3001/getUser?userID=655b305bc596691349130886`,
       {
         method: "GET",
         headers: {
@@ -55,8 +56,8 @@ export default function profil() {
             <span className="mt-5 mb-20">Fødselsdato</span>
           </div>
           <div className="text-white text-lg mt-5 font-semibold justify-center flex flex-col text-left ml-5">
-            <span className="mt-5">Iver Morland Karlsvik</span>
-            <span className="mt-5">iver.sleeperbuild@gmail.com</span>
+            <span className="mt-5">{user?.username}</span>
+            <span className="mt-5">{user?.mail}</span>
             <span className="mt-5">Nordre Aker</span>
             <span className="mt-5 mb-20">09. Oktober, 2006</span>
           </div>
