@@ -33,6 +33,28 @@ export default function Logginn() {
         register()
       }
 
+      const [formLoggInnData, setFormLoggInnData] = useState({
+        // add more fields as needed
+        floating_password: '',
+        floating_email: '',
+      });
+    
+      // Handle changes in form fields
+      const handleLoggInnChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+    
+      // Handle form submission
+      const onLoggInnSubmit = async (e: any) => {
+        e.preventDefault();
+        console.log(formData)
+
+      }
+
       async function register() {
         try {
             const response = await fetch(`http://localhost:3001/register?username=${formData.floating_username}&password=${formData.floating_password}&mail=${formData.floating_email}`, {
@@ -75,13 +97,13 @@ export default function Logginn() {
                         </button>
                     </div>
                     <div className=" p-5">
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={onLoggInnSubmit}>
                             <div className="relative z-0 w-full mb-5 group">
-                                <input onChange={handleChange} type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                                <input onChange={handleLoggInnChange} type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                                 <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-autopeer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                             </div>
                             <div className="relative z-0 w-full mb-5 group">
-                                <input onChange={handleChange} type="password" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0  peer" placeholder=" " required />
+                                <input onChange={handleLoggInnChange} type="password" name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0  peer" placeholder=" " required />
                                 <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                             </div>
                             <div className="mt-8 gap-3 flex justify-between">
