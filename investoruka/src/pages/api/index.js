@@ -39,6 +39,22 @@ app.get("/getItems", async (req, res) => {
   }
 });
 
+app.post("/verifyUser", async (req, res) => {
+  const { token } = req.query;
+  try {
+    jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET, (err, decoded) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(decoded);
+        return res.status(200).json(decoded.userID);
+      }
+    });
+  } catch (error) {
+    console.error("Error verifying JWT:", error);
+  }
+});
+
 app.post("/register", async (req, res) => {
   try {
     const { username, password, mail } = req.query;
