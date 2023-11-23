@@ -51,6 +51,7 @@ export default function Logginn() {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 console.log('Registration successful!');
+                Router.push('/utlan')
             } else {
                 console.error('Registration failed:', data.status);
             }
