@@ -20,8 +20,8 @@ app.listen(port, () => {
 
 app.get("/getUser", async (req, res) => {
   try {
-    const userID = req.query;
-    const user = await User.findById(userID.userID);
+    const userID = req.query.userID;
+    const user = await User.findById(userID);
     res.status(200).json({ user: user });
   } catch (error) {
     console.error("Error while getting user:", error);
@@ -42,12 +42,11 @@ app.get("/getItems", async (req, res) => {
 app.post("/verifyUser", async (req, res) => {
   const { token } = req.query;
   try {
-    jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(decoded);
-        return res.status(200).json(decoded.userID);
+        return res.status(200).json(decoded._id);
       }
     });
   } catch (error) {
