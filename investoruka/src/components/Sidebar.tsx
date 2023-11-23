@@ -4,9 +4,12 @@ import { FaHandHolding } from "react-icons/fa6";
 import { IoInformation } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa6";
+import { useState } from 'react';
+import MenuFull from '@/components/MenuFull';
 
 
 const Sidebar = () => {
+    const [menu, setMenu] = useState(false)
   return (
     <nav>
         <div className='hidden md:flex md:fixed z-20 text-white text-2xl items-center h-screen'>
@@ -18,12 +21,15 @@ const Sidebar = () => {
             </div>
         </div>
         <div className='flex fixed md:hidden z-20 text-white text-2xl justify-end w-screen'>
-            <div className="absolute flex-col shadow-2xl rounded-[10rem] m-7 p-3 z-20 bg-[#363535]">
+            <button onClick={() => setMenu(!menu)} className="absolute flex-col shadow-2xl rounded-[10rem] m-7 p-3 z-20 bg-[#363535]">
                 <menu>
                     <FaCaretDown />
                 </menu>
-            </div>
+            </button>
         </div>
+        {menu && 
+            <MenuFull />
+        }
     </nav>
   )
 }
