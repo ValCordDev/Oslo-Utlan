@@ -6,16 +6,26 @@ import { FaWpforms } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa6";
 import { useState } from 'react';
 import MenuFull from '@/components/MenuFull';
+import Router from 'next/router';
 
 
 const Sidebar = () => {
     const [menu, setMenu] = useState(false)
+
+function redirectProfil() {
+    Router.push('/profil')
+}
+
+function redirectUtlan() {
+    Router.push('/utlan')
+}
+
   return (
     <nav>
         <div className='hidden md:flex md:fixed z-20 text-white text-2xl items-center h-screen'>
             <div className="absolute flex-row shadow-2xl rounded-[10rem] m-5 z-20">
-                <div className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><CgProfile /></div>
-                <div className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><FaHandHolding /></div>
+                <div onClick={redirectProfil} className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><CgProfile /></div>
+                <div onClick={redirectUtlan} className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><FaHandHolding /></div>
                 <div className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><IoInformation /></div>
                 <div className='p-3 m-4 hover:bg-[#363535] rounded-3xl duration-300 ease-in-out transition-all hover:shadow-xl hover:cursor-pointer'><FaWpforms /></div>
             </div>

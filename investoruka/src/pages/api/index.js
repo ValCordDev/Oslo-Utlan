@@ -40,13 +40,13 @@ app.get("/getItems", async (req, res) => {
 });
 
 app.post("/verifyUser", async (req, res) => {
-  const { token } = req.query;
+  const token = req.headers.authorization.split(' ')[1];
   try {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.log(err);
+        console.log("error:", err);
       } else {
-        return res.status(200).json(decoded._id);
+        return res.status(200).json({uid: decoded._id});
       }
     });
   } catch (error) {
@@ -85,8 +85,9 @@ app.get("/login", async (req, res) => {
       res.status(400).json({ status: "Wrong username or password" }); // hvis brukeren ikke finnes eller passordet er feil
     } else {
       const token = jwt.sign(
-        { username: user.username }, // lager en token
-        process.env.JWT_SECRET // hemmelig nøkkel
+        // lager en token
+        { username: user.username, _id: user._id },
+        process.env.JWT_SECRET
       );
       res.status(200).json({ token: token, uid: user._id }); // sett til localstorage i frontend
     }
