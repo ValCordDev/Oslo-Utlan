@@ -54,9 +54,11 @@ export default function Logginn() {
                 Router.push('/utlan')
             } else {
                 console.error('Registration failed:', data.status);
+                alert('Registration failed: ' + data.status)
             }
         } catch (error) {
             console.error('Error during registration:', error);
+            alert('Error during registration: ' + error)
         }
     }
 
@@ -95,15 +97,16 @@ export default function Logginn() {
     
           if (response.ok) {
             console.log(data)
-            // const login = {dataToken: data.token, dataUID: data.uid}
             localStorage.setItem('token', data.token)
             console.log('Login successful!');
             Router.push('/utlan')
           } else {
-            console.error('Login failed:', data.status);
+            console.error('Login failed:', data.status)
+            alert('Login failed: ' + data.status);
           }
         } catch (error) {
           console.error('Error during login:', error);
+          alert('Error during login: ' + error)
         }
       };
     

@@ -4,6 +4,7 @@ import { CiUser } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import { GetUser } from "@/actions/getUserAction";
 import { CgLaptop } from "react-icons/cg";
+import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default function profil() {
 
   return (
     <main className="h-screen w-screen">
+      <Sidebar />
       <div className="flex justify-center w-full h-screen flex-col">
         <CiUser className="text-white flex w-screen justify-center text-6xl font-extrabold" />
         <span className="text-white flex w-screen justify-center text-6xl mt-5 mb-20 font-bold">
