@@ -24,7 +24,7 @@ const Utlansting = ({ item }: any) => {
           )}
           {item.renter == "iver" ? ( // TODO: replace with actual user (with token + username in a verifyuser function)
             <a
-              className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 py-3 px-4 focus:ring-offset-gray-800 w-30 h-10"
+              className="btn inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all"
               href="#"
             >
               Returner
@@ -45,7 +45,7 @@ const Utlansting = ({ item }: any) => {
             </a>
           ) : (
             <a
-              className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 py-3 px-4 focus:ring-offset-gray-800 w-30 h-10"
+              className="btn inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all"
               href="#"
             >
               Lån
