@@ -6,6 +6,7 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import { default as User } from "../../../models/User.js";
 import { default as Item } from "../../../models/Item.js";
+import { user } from "@nextui-org/theme";
 const app = express();
 const port = 3001;
 dotenv.config();
@@ -40,13 +41,13 @@ app.get("/getItems", async (req, res) => {
 });
 
 app.post("/verifyUser", async (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers.authorization.split(" ")[1];
   try {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         console.log("error:", err);
       } else {
-        return res.status(200).json({uid: decoded._id});
+        return res.status(200).json({ uid: decoded._id });
       }
     });
   } catch (error) {
@@ -121,7 +122,7 @@ app.put("/rent", async (req, res) => {
     } else {
       item.isRented = true;
       item.dateRented = Date.now();
-      item.renter = user.username;
+      item.renter = userID;
       user.renting.push(item.title);
       await item.save();
       await user.save();

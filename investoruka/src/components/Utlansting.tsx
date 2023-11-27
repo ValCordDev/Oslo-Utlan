@@ -1,6 +1,9 @@
+import { GetUser } from "@/actions/getUserAction";
 import React from "react";
 
 const Utlansting = ({ item }: any) => {
+  const uid = GetUser();
+  console.log(uid);
   return (
     <div className="bg-[#191919] rounded-2xl w-[32rem] h-48 shadow-xl flex flex-row">
       <img
@@ -17,12 +20,12 @@ const Utlansting = ({ item }: any) => {
             Status: <br />
             {!item.isRented ? <p>🟢 Ledig</p> : <p>🔴 Ikke ledig</p>}
           </span>
-          {item.isRented && (
+          {/* {item.isRented && (
             <span className="text-xs">
               Leiet ut til: <br /> {item.renter}
             </span>
-          )}
-          {item.renter == "iver" ? ( // TODO: replace with actual user (with token + username in a verifyuser function)
+          )} */}
+          {item.renter == uid ? ( // TODO: replace with actual user (with token + username in a verifyuser function)
             <a
               className="btn inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all"
               href="#"
