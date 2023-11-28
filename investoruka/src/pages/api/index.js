@@ -106,6 +106,7 @@ app.put("/rent", async (req, res) => {
   if (item.isRented) {
     res.status(400).json({ status: "Item is already rented" });
   } else {
+    item.code = Math.floor(Math.random() * 1000000); // generer en kode
     item.isRented = true;
     item.dateRented = Date.now();
     item.renter = userID;
@@ -117,13 +118,15 @@ app.put("/rent", async (req, res) => {
 });
 
 app.put("/return", async (req, res) => {
-  const { itemID, userID } = req.query; // token er en JWT
-  console.log("itemID: ", itemID, "userID: ", userID);
+  const { itemID, userID, code } = req.query; // token er en JWT
   const item = await Item.findById(itemID); // finn gjenstanden i databasen
   const user = await User.findById(userID); // finn brukeren i databasen
-  if (!item.isRented) {
+  if (item.code !== code) {
+    res.status(400).json({ status: "Wrong code" });
+  } else if (!item.isRented) {
     res.status(400).json({ status: "Item is already returned/not rented" });
   } else {
+    item.code = null;
     item.isRented = false;
     item.dateRented = null;
     item.renter = null;
@@ -133,7 +136,6 @@ app.put("/return", async (req, res) => {
     }
     await item.save();
     await user.save();
-    console.log("RETURNED");
     res.status(200).json({ status: "Item rented" });
   }
 });
