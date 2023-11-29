@@ -15,6 +15,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@sira-ui/tailwind')],
 }
 export default config
