@@ -5,6 +5,7 @@ const itemSchema = new mongoose.Schema({
   description: String,
   isRented: { type: Boolean, default: false },
   imgURL: String,
+  code: String,
   dateRented: { type: Date, default: null },
   renter: { type: String, default: null },
   dateCreated: { type: Date, default: Date.now },
