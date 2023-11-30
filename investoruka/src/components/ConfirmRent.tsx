@@ -21,7 +21,7 @@ const ConfirmRent = ({ item, onClose, setRented }: any) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-[#191919] bg-opacity-75 z-50">
-      <div className="bg-[#232323] text-white rounded-lg h-5/6 w-4/5 p-5 flex ">
+      <div className="bg-[#232323] text-white rounded-lg h-5/6 w-4/5 p-8 flex ">
         <div className="w-5/6 pr-5">
           <h2 className="text-xl font-semibold mb-4">
             Lån av : <br />
