@@ -8,26 +8,23 @@ const GetUser = () => {
     if (storedToken) {
       verifyUser(storedToken);
     } else {
-      console.log("no ")
+      console.log("no ");
       setUser("");
     }
   }, []);
 
   const verifyUser = async (token) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/verifyUser`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:3001/verifyUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
-        const data = await response.json()
+        const data = await response.json();
         setUser(data.uid);
       } else {
         // localStorage.removeItem("token");

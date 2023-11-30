@@ -118,25 +118,29 @@ app.put("/rent", async (req, res) => {
 });
 
 app.put("/return", async (req, res) => {
-  const { itemID, userID, code } = req.query; // token er en JWT
-  const item = await Item.findById(itemID); // finn gjenstanden i databasen
-  const user = await User.findById(userID); // finn brukeren i databasen
-  if (item.code !== code) {
-    res.status(400).json({ status: "Wrong code" });
-  } else if (!item.isRented) {
-    res.status(400).json({ status: "Item is already returned/not rented" });
-  } else {
-    item.code = null;
-    item.isRented = false;
-    item.dateRented = null;
-    item.renter = null;
-    const index = user.renting.indexOf(item.title);
-    if (index !== -1) {
-      user.renting.splice(index, 1);
+  try {
+    const { itemID, userID, code } = req.query; // token er en JWT
+    const item = await Item.findById(itemID); // finn gjenstanden i databasen
+    const user = await User.findById(userID); // finn brukeren i databasen
+    if (item.code !== code) {
+      res.status(400).json({ status: "Wrong code" });
+    } else if (!item.isRented) {
+      res.status(400).json({ status: "Item is already returned/not rented" });
+    } else {
+      item.code = null;
+      item.isRented = false;
+      item.dateRented = null;
+      item.renter = null;
+      const index = user.renting.indexOf(item.title);
+      if (index !== -1) {
+        user.renting.splice(index, 1);
+      }
+      await item.save();
+      await user.save();
+      res.status(200).json({ status: "Item rented" });
     }
-    await item.save();
-    await user.save();
-    res.status(200).json({ status: "Item rented" });
+  } catch (error) {
+    console.log(error);
   }
 });
 
