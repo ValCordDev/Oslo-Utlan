@@ -73,7 +73,7 @@ const ConfirmRent = ({ item, onClose, setRented }: any) => {
           <div className="flex justify-end pt-10">
             <button
               onClick={handleConfirm}
-              className={`bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-400 ${
+              className={`bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all focus:outline-none focus:ring focus:ring-blue-400 ${
                 !isChecked ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!isChecked}
