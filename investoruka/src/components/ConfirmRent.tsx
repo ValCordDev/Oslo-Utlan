@@ -52,6 +52,9 @@ const ConfirmRent = ({ item, onClose, setRented }: any) => {
             Ved brudd på kontraktsvilkårene har Oslo Utlån rett til å avslutte
             kontrakten umiddelbart.
           </span>
+          <br />
+          <br />
+          <br />
           <div className="flex items-center mb-4 pt-5">
             <input
               type="checkbox"
@@ -64,13 +67,13 @@ const ConfirmRent = ({ item, onClose, setRented }: any) => {
             </label>
           </div>
         </div>
-        <div className="flex flex-col w-full items-end">
+        <div className="flex flex-col justify-between items-center w-full">
           <img
-            className=" w-full h-full object-cover rounded-md "
+            className=" w-10/12 h-10/12 object-cover aspect-square rounded-md "
             src={item.imgURL}
             alt="produkt bilde"
           />
-          <div className="flex justify-end pt-10">
+          <div className="flex h-20 items-center justify-end w-full pt-4">
             <button
               onClick={handleConfirm}
               className={`bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all focus:outline-none focus:ring focus:ring-blue-400 ${
