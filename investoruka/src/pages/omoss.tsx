@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function omoss() {
   return (
-    <main className='w-full text-white'>
+    <main className='w-screen text-white overflow-x-hidden'>
         <Sidebar />
         <Topplogo />
         <div className='flex justify-center p-24'>

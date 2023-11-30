@@ -40,11 +40,11 @@ export default function utlan() {
 
 
   return (
-    <main className='w-full'>
+    <main className='h-screen w-screen overflow-x-hidden'>
       <Sidebar />
       <Topplogo />
       <span className='text-white flex w-screen justify-center text-6xl mt-20 mb-10 font-bold'>Utlånstilbud</span> 
-      <div className='flex justify-center w-full h-screen'>
+      <div className='flex justify-center w-full h-full'>
         <div className='grid xl:grid-cols-2 gap-5 grid-cols-1'>
         {Array.isArray(items) && items.length > 0 && items.map((item: Item) => (
             <Utlansting key={item.id} item={item} />
