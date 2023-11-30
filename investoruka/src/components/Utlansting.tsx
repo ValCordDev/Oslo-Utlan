@@ -2,14 +2,17 @@ import { GetUser } from "@/actions/getUserAction";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import ConfirmRent from "./ConfirmRent";
+import ConfirmReturn from "./ConfirmReturn";
 
 const Utlansting = ({ item }: any) => {
   const [returnCode, setReturnCode] = useState("");
   const [rented, setRented] = useState(false);
+  const [returned, setReturned] = useState(false);
   const uid = GetUser();
   const [dateRented, setDateRented] = useState<Date | null>(null);
   const [returnDurationInDays] = useState<number>(7);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirmReturn, setShowConfirmReturn] = useState(false);
 
   const handleConfirmPopup = () => {
     setShowConfirm(true);
@@ -18,6 +21,12 @@ const Utlansting = ({ item }: any) => {
   const handleCloseConfirm = () => {
     setShowConfirm(false);
   };
+  const handleConfirmReturnPopup = () => {
+    setShowConfirmReturn(true);
+  };
+  const handleCloseConfirmReturn = () => {
+    setShowConfirmReturn(false);
+  };
   useEffect(() => {
     if (item.dateRented) {
       setDateRented(new Date(item.dateRented));
@@ -25,10 +34,16 @@ const Utlansting = ({ item }: any) => {
   }, [item.dateRented]);
   useEffect(() => {
     if (rented == true) {
-      console.log("rented");
       rentItem();
     }
   }, [rented]);
+  useEffect(() => {
+    if (returned == true) {
+      console.log("returning");
+      handleCloseConfirmReturn();
+      returnItem();
+    }
+  }, [returned]);
 
   const calculateTimeLeft = () => {
     if (!dateRented) return null;
@@ -51,6 +66,7 @@ const Utlansting = ({ item }: any) => {
   const timeLeft = calculateTimeLeft();
 
   const returnItem = async () => {
+    console.log("returnCode: " + returnCode);
     const response = await fetch(
       `http://localhost:3001/return?itemID=${item._id}&userID=${uid}&code=${returnCode}`,
       {
@@ -68,7 +84,6 @@ const Utlansting = ({ item }: any) => {
     }
   };
   const rentItem = async () => {
-    console.log("renting item");
     const response = await fetch(
       `http://localhost:3001/rent?itemID=${item._id}&userID=${uid}`,
       {
@@ -99,6 +114,16 @@ const Utlansting = ({ item }: any) => {
           setRented={setRented}
         />
       )}
+      {showConfirmReturn && (
+        <ConfirmReturn
+          onChange={handleInputChange}
+          onClose={handleCloseConfirmReturn}
+          value={returnCode}
+          item={item}
+          setReturned={setReturned}
+          setReturnCode={setReturnCode}
+        />
+      )}
       <img
         src={item.imgURL}
         alt="Playstation"
@@ -117,24 +142,13 @@ const Utlansting = ({ item }: any) => {
               <p>🔴 Ikke ledig (ledig om {timeLeft?.daysLeft} dager)</p>
             )}
           </span>
-          {/* {item.isRented && (
-            <span className="text-xs">
-              Leiet ut til: <br /> {item.renter}
-            </span>
-          )} */}
+
           {item.renter == uid ? ( // TODO: replace with actual user (with token + username in a verifyuser function)
             <>
-              <input
-                type="text"
-                placeholder="Enter return code"
-                value={returnCode}
-                onChange={handleInputChange}
-                className="border rounded px-2 py-1"
-              />
               <a
                 className="btn inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 text-white text-sm font-medium rounded-md py-3 px-4 focus:ring-offset-gray-800 w-30 h-10 active:scale-90 transition-all"
                 href="#"
-                onClick={() => returnItem()}
+                onClick={() => handleConfirmReturnPopup()}
               >
                 Returner
                 <svg
