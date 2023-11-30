@@ -52,6 +52,9 @@ const ConfirmRent = ({ item, onClose, setRented }: any) => {
             Ved brudd på kontraktsvilkårene har Oslo Utlån rett til å avslutte
             kontrakten umiddelbart.
           </span>
+          <br />
+          <br />
+          <br />
           <div className="flex items-center mb-4 pt-5">
             <input
               type="checkbox"
